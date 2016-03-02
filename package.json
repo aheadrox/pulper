@@ -1,6 +1,6 @@
 {
-  "name": "Pulper",
-  "version": "1.0.0",
+  "name": "pulper",
+  "version": "1.0.1",
   "main": "server/boot.js",
   "scripts": {
     "start": "node .",

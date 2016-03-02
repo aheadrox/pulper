@@ -6,7 +6,7 @@ module.exports = {
      * Server connection string
      */
     server: {
-        host: process.env.HOST || '0.0.0.0',
+        host: '0.0.0.0',
         port: process.env.PORT || 3000,
         mode: process.env.MODE
     },

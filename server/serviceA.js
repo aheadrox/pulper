@@ -1,6 +1,7 @@
 var config = require('./config.js');
 var broker = require('./broker.js');
 var uuid = require('node-uuid');
+var url = require('url');
 
 require('http').createServer(function(req, res) {
     /** Collects request payload */
@@ -16,8 +17,9 @@ require('http').createServer(function(req, res) {
     req.on('end', function () {
         var xUrl = req.headers['x-url'];
         if (xUrl) {
+            var messageUid = uuid();
             broker.process({
-                uuid: uuid(),
+                uuid: messageUid,
                 routingKey: 'request.' + url.parse(xUrl).hostname,
                 payload: {
                     url: xUrl,
@@ -26,11 +28,12 @@ require('http').createServer(function(req, res) {
                     body: body
                 }
             });
-            res.writeHead(200, 'OK');
+            res.writeHead(200);
+            res.end(messageUid);
         } else {
-            res.writeHead(400, 'X-URL header not found');
+            res.writeHead(400);
+            res.end('X-URL header not found');
         }
-        res.end();
     });
 }).listen(config.server.port, config.server.host, function() {
     console.log(

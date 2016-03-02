@@ -4,15 +4,23 @@ var http = require('http');
 var url = require('url');
 
 broker.receive('response', function(data, message, channel) {
-    var parsed = url.parse(data.url),
-        messageUid = message.properties.correlationId;
+    var messageUid = message.properties.correlationId;
+    console.log(' [<] Got message %s with status %s',
+        messageUid, data.statusCode);
 
-    console.log(' [<] Got message %s', messageUid);
-    console.log(' [+] Sending status %s to %s', data.statusCode, data.url);
+    data.url = data.url || config.callbackUrl;
+    if (!data.url) {
+        console.log(' [!] Empty data.url and callbackUrl setting - exiting.');
+        return;
+    }
 
+    data.url = data.url.replace('%uid%', messageUid);
+
+    var parsed = url.parse(data.url);
     parsed.method = data.method;
     parsed.headers = data.headers;
 
+    console.log(' [+] Sending to %s', data.url);
     var req = http.request(parsed, function(res) {
         /** Collects response payload */
         var body = "";
