@@ -1,0 +1,25 @@
+{
+  "name": "Pulper",
+  "version": "1.0.0",
+  "main": "server/boot.js",
+  "scripts": {
+    "start": "node .",
+    "pretest": "jshint .",
+    "posttest": "nsp check"
+  },
+  "dependencies": {
+    "amqplib": "^0.4.1",
+    "compression": "^1.0.3",
+    "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "jshint": "^2.5.6",
+    "nsp": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/maprox/pulper"
+  },
+  "description": "Lightweight HTTP Proxy via AMQP protocol",
+  "license": "MIT"
+}
