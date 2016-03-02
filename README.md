@@ -42,26 +42,21 @@ There are some environment variables which you can modify if you want:
 
 1. Run *serviceA* on port *8080*
 
-
-    PORT=8080 node .
-
+        PORT=8080 node .
 
 2. Run *serviceB* with different amqp settings
 
-
-    MODE=serviceB AMQP_CONNECTION=amqp://admin:XsE390@rabbitmq// node .
-
+        MODE=serviceB AMQP_CONNECTION=amqp://admin:XsE390@rabbitmq// node .
 
 3. Run *serviceC* with different *CALLBACK_URL*
 
-
-    MODE=serviceC CALLBACK_URL=http://localhost:2909/?id=%uid% node .
+        MODE=serviceC CALLBACK_URL=http://localhost:2909/?id=%uid% node .
 
 ## Description
 
 There are three separate services which can be run:
 
-![](https://github.com/maprox/pulper/raw/master/assets/routing.png)
+![Workflow](https://github.com/maprox/pulper/raw/master/assets/routing.png)
 
 ### serviceA
 
