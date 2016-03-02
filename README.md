@@ -104,3 +104,9 @@ After it receives this internal message with its **X-CALLBACK-URL**
 and makes HTTP request to that URL with the same status code,
 headers and body as original HTTP response had.
 
+
+---
+
+[![forthebadge](http://forthebadge.com/images/badges/designed-in-ms-paint.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/powered-by-electricity.svg)](http://forthebadge.com)
+[![forthebadge](http://forthebadge.com/images/badges/fuck-it-ship-it.svg)](http://forthebadge.com)
