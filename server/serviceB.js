@@ -1,48 +1,38 @@
 var config = require('./config.js');
 var broker = require('./broker.js');
-var http = require('http');
+var request = require('request');
 var url = require('url');
 
 broker.receive('request', function(data, message, channel) {
-    var parsed = url.parse(data.url),
-        messageUid = message.properties.correlationId;
+    var messageUid = message.properties.correlationId,
+        options = {
+            method: data.method,
+            url: data.url,
+            headers: data.headers,
+            body: data.body
+        };
 
     console.log(' [<] Got message %s', messageUid);
     console.log(' [+] Sending %s to %s', data.method, data.url);
 
-    parsed.method = data.method;
-    parsed.headers = data.headers;
-
-    var req = http.request(parsed, function(res) {
-        /** Collects response payload */
-        var body = "";
-        res.setEncoding('utf8');
-        res.on('data', function(chunk) {
-            body += chunk;
+    request(options, function(error, response, body) {
+        if (error) {
+            console.log(" [!] Problem with the request: " + error);
+            return;
+        }
+        console.log(' [>] Got %s from %s', response.statusCode, options.url);
+        console.log(' [>] Sending back as %s', messageUid);
+        broker.process({
+            uuid: messageUid,
+            routingKey: 'response.' + url.parse(options.url).hostname,
+            payload: {
+                statusCode: response.statusCode,
+                headers: response.headers,
+                body: body,
+                url: options.headers['x-callback-url'],
+                _original: data
+            }
         });
-        res.on('end', function() {
-            console.log(' [>] Got %s from %s', res.statusCode, data.url);
-            console.log(' [>] Sending back as %s', messageUid);
-            broker.process({
-                uuid: messageUid,
-                routingKey: 'response.' + url.parse(data.url).hostname,
-                payload: {
-                    statusCode: res.statusCode,
-                    headers: res.headers,
-                    body: body,
-                    url: data.headers['x-callback-url'],
-                    _original: data
-                }
-            });
-            channel.ack(message);
-        })
+        channel.ack(message);
     });
-
-    req.on('error', function(e) {
-        console.log("Problem with the request: " + e.message);
-    });
-
-    // write data to request body
-    req.write(data.body);
-    req.end();
 });

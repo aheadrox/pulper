@@ -17,14 +17,19 @@ require('http').createServer(function(req, res) {
     req.on('end', function () {
         var xUrl = req.headers['x-url'];
         if (xUrl) {
-            var messageUid = uuid();
+            var messageUid = uuid(),
+                host = url.parse(xUrl).hostname,
+                headers = req.headers;
+            // change the host header
+            headers.host = host;
+            // send the request to the message broker
             broker.process({
                 uuid: messageUid,
-                routingKey: 'request.' + url.parse(xUrl).hostname,
+                routingKey: 'request.' + host,
                 payload: {
                     url: xUrl,
                     method: req.method,
-                    headers: req.headers,
+                    headers: headers,
                     body: body
                 }
             });

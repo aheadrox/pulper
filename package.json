@@ -10,7 +10,8 @@
   "dependencies": {
     "amqplib": "^0.4.1",
     "compression": "^1.0.3",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "request": "^2.69.0"
   },
   "devDependencies": {
     "jshint": "^2.5.6",
