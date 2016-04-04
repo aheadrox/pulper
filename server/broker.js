@@ -44,7 +44,7 @@ module.exports = {
                         {
                             contentType: 'application/json',
                             correlationId: message.uuid,
-                            timestamp: (new Date()).toISOString()
+                            date: (new Date()).toISOString()
                         }
                     );
                     console.log(" [>] Sent %s to %s",
