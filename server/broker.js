@@ -43,7 +43,8 @@ module.exports = {
                         new Buffer(JSON.stringify(message.payload)),
                         {
                             contentType: 'application/json',
-                            correlationId: message.uuid
+                            correlationId: message.uuid,
+                            timestamp: (new Date()).toISOString()
                         }
                     );
                     console.log(" [>] Sent %s to %s",
