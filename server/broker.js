@@ -37,6 +37,7 @@ module.exports = {
                 console.log(" [+] Connected");
                 console.log(' [+] Preparing to send %s', message.uuid);
                 return getExchange(channel).then(function() {
+                    var now = new Date();
                     channel.publish(
                         getExchangeName(),
                         message.routingKey,
@@ -44,7 +45,10 @@ module.exports = {
                         {
                             contentType: 'application/json',
                             correlationId: message.uuid,
-                            date: (new Date()).toISOString()
+                            timestamp: now.getTime(),
+                            headers: {
+                                "date-iso": now.toISOString()
+                            }
                         }
                     );
                     console.log(" [>] Sent %s to %s",
