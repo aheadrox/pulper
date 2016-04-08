@@ -16,6 +16,7 @@ module.exports = {
      * If empty, service looks for X-CALLBACK-URL header in request message
      */
     callbackUrl: process.env.CALLBACK_URL || '',
+    callbackMethod: process.env.CALLBACK_METHOD || 'GET',
 
     /**
      * AMQP connection string

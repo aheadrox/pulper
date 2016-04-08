@@ -1,0 +1,28 @@
+{
+  "apps" : [{
+        "name"        : "pulper-a",
+        "script"      : "./.",
+        "watch"       : true,
+        "merge_logs"  : true,
+	"env": {
+            "PORT": "2999"
+        }
+     },{
+        "name"        : "pulper-b",
+        "script"      : "./.",
+        "watch"       : true,
+        "merge_logs"  : true,
+        "env": {
+            "MODE": "serviceB"
+        }
+     },{
+        "name"        : "pulper-c",
+        "script"      : "./.",
+        "watch"       : true,
+        "merge_logs"  : true,
+        "env": {
+            "MODE": "serviceC",
+	    "CALLBACK_METHOD": "POST"
+        }
+     }]
+}

@@ -6,7 +6,7 @@ var url = require('url');
 broker.receive('response', function(data, message, channel) {
     var messageUid = message.properties.correlationId,
         options = {
-            method: data.method,
+            method: data.method || config.callbackMethod,
             url: data.url || config.callbackUrl,
             headers: data.headers,
             body: data.body
@@ -22,7 +22,7 @@ broker.receive('response', function(data, message, channel) {
 
     options.url = options.url.replace('%uid%', messageUid);
 
-    console.log(' [+] Sending to %s', options.url);
+    console.log(' [+] Sending to %s %s', options.method ,options.url);
     request(options, function(error, response) {
         if (error) {
             console.log(" [!] Problem with the request: " + error);
