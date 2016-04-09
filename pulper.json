@@ -22,7 +22,7 @@
         "merge_logs"  : true,
         "env": {
             "MODE": "serviceC",
-	    "CALLBACK_METHOD": "POST"
+	          "CALLBACK_METHOD": "POST"
         }
      }]
 }
