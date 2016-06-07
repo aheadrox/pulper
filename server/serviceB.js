@@ -1,7 +1,9 @@
+var consts = require('./consts.js');
 var config = require('./config.js');
 var broker = require('./broker.js');
 var request = require('request');
 var url = require('url');
+var validUrl = require('valid-url');
 
 broker.receive('request', function(data, message, channel) {
     var messageUid = message.properties.correlationId,
@@ -13,12 +15,21 @@ broker.receive('request', function(data, message, channel) {
         };
 
     console.log(' [<] Got message %s', messageUid);
+
+    if (!validUrl.isUri(data.url)) {
+        console.log(' [!] Url "%s" is not valid. Wiping out...', data.url);
+        channel.ack(message);
+        return;
+    }
+
     console.log(' [+] Sending %s to %s', data.method, data.url);
 
     request(options, function(error, response, body) {
         if (error) {
+            setTimeout(function() {
+                channel.nack(message);
+            }, consts.TIMEOUT_NACK);
             console.log(" [!] Problem with the request: " + error);
-            channel.nack(message);
             return;
         }
         console.log(' [>] Got %s from %s', response.statusCode, options.url);

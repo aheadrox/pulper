@@ -9,6 +9,11 @@ module.exports = {
         serviceA: 'serviceA',
         serviceB: 'serviceB',
         serviceC: 'serviceC'
-    }
+    },
+
+    /**
+     * Timeout in milliseconds to re-queue a message which wasn't delivered
+     */
+    TIMEOUT_NACK: 5000
 
 };
