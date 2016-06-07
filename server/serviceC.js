@@ -25,7 +25,7 @@ broker.receive('response', function(data, message, channel) {
 
     options.url = options.url.replace('%uid%', messageUid);
 
-    if (!validUrl.isUri(options.url)) {
+    if (!validUrl.isWebUri(options.url)) {
         console.log(' [!] Url "%s" is not valid. Wiping out...', options.url);
         channel.ack(message);
         return;
