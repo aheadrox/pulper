@@ -22,7 +22,7 @@ In this case you will run *serviceA* on port *3000*.
 
 There are some environment variables which you can modify if you want:
 
-* **MODE** [*serviceA*] - which service you want to run 
+* **MODE** [*serviceA*] - which service you want to run
     (*serviceA*, *serviceB* or *serviceC*)
 
 * **PORT** [*3000*] - which port your service will listen
@@ -48,7 +48,7 @@ There are some environment variables which you can modify if you want:
 
         MODE=serviceB AMQP_CONNECTION=amqp://admin:XsE390@rabbitmq// node .
 
-3. Run *serviceC* with different *CALLBACK_URL*
+3. Run *serviceC* with different *CALLBACK_URL* and *CALLBACK_METHOD*
 
         MODE=serviceC CALLBACK_URL=http://localhost:2909/?id=%uid% node .
 
@@ -99,12 +99,11 @@ Final place of our journey.
 This service connects to the AMQP broker and waits for internal message
 from *serviceB* with HTTP response to come.
 
-After it receives this internal message with its **X-CALLBACK-URL** 
+After it receives this internal message with its **X-CALLBACK-URL**
 (uses *CALLBACK-URL* option if this header is empty) it obtains HTTP response
 and makes HTTP request to that URL with the same status code,
 headers and body as original HTTP response had.
 
-Denis Grigoryev
 
 ---
 
