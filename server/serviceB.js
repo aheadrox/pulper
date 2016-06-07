@@ -18,6 +18,7 @@ broker.receive('request', function(data, message, channel) {
     request(options, function(error, response, body) {
         if (error) {
             console.log(" [!] Problem with the request: " + error);
+            channel.nack(message);
             return;
         }
         console.log(' [>] Got %s from %s', response.statusCode, options.url);
