@@ -17,6 +17,7 @@ broker.receive('response', function(data, message, channel) {
 
     if (!options.url) {
         console.log(' [!] Empty data.url and callbackUrl setting - exiting.');
+        channel.ack(message);
         return;
     }
 
@@ -26,6 +27,7 @@ broker.receive('response', function(data, message, channel) {
     request(options, function(error, response) {
         if (error) {
             console.log(" [!] Problem with the request: " + error);
+            channel.nack(message);
             return;
         }
         console.log(' [>] Got %s from %s', response.statusCode, options.url);
