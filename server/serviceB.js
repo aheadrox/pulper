@@ -16,7 +16,7 @@ broker.receive('request', function(data, message, channel) {
 
     console.log(' [<] Got message %s', messageUid);
 
-    if (!validUrl.isUri(data.url)) {
+    if (!validUrl.isWebUri(data.url)) {
         console.log(' [!] Url "%s" is not valid. Wiping out...', data.url);
         channel.ack(message);
         return;
